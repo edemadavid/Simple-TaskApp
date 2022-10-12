@@ -44,7 +44,10 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return (view('welcome'));
+        return redirect()->action(
+            [ProjectController::class, 'index']
+
+        );
     }
 
     /**
@@ -94,6 +97,12 @@ class ProjectController extends Controller
     public function destroy(Project $project, $id)
     {
         $project = Project::find($id);
+
+        // dd($project);
         $project->delete();
+
+        return redirect()->action(
+            [ProjectController::class, 'index']
+        );
     }
 }

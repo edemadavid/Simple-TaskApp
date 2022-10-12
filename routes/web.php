@@ -25,9 +25,14 @@ Route::get('/addProject', [ProjectController::class, 'create']);
 
 Route::post('/addProject', [ProjectController::class, 'store'])->name('addProject');
 
+Route::get('/addProject/{id}', [ProjectController::class, 'destroy'])->name('deleteProject');
+
 Route::get('/projectTask/{id}', [TaskController::class, 'index'])->name('task');
 
 Route::get('/projectTask/add/{id}', [TaskController::class, 'create'])->name('addTask');
 
 Route::post('/projectTask/store', [TaskController::class, 'store'])->name('storeTask');
+
+Route::get('/projectTask/complete/{id}', [TaskController::class, 'complete'])->name('complete');
+
 

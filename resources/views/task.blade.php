@@ -2,25 +2,44 @@
     @section('contents')
     <section class="container  px-6 py-10 mx-auto p-6 font-mono">
 
-      <h1 class="text-3xl font-semibold text-gray-800 text-center capitalize lg:text-4xl">Tasks Lists</h1>
-      <a href="{{ route('addTask', $project->id)}}" class="text-xl font-semibold text-gray-800 hover:underline  ">
-               add New Task
-        </a>
+        <h1 class="text-3xl font-semibold text-gray-800 text-center capitalize lg:text-4xl">Tasks Lists</h1>
+
+        <div class="flex justify-between ">
+            <a href="{{ route('addTask', $project->id)}}" class="text-xl font-semibold text-gray-800 hover:underline ">
+                add New Task
+            </a>
+            <a href="{{ route('deleteProject', $project->id)}}" class="text-xl font-semibold text-red-800 hover:underline"
+            onclick="return confirm('Are you sure you want to delete the whole project?');" >
+                Delete Project
+            </a>
+        </div>
         <div class="w-full mb-8  mt-8 overflow-hidden rounded-lg shadow-lg">
           <div class="w-full overflow-x-auto">
             <table class="w-full">
               <thead>
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                  <th class="px-4 py-3">Name</th>
-                  <th class="px-4 py-3">Status</th>
-                  <th class="px-4 py-3">Date</th>
-                  <th class="px-4 py-3">Action</th>
+                    <th class="px-4 py-3">S/n</th>
+                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Action</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
-
+                @php
+                    $i = 1;
+                @endphp
                 @forelse ( $TaskList as $task)
                 <tr class="text-gray-700">
+                    <td class="px-4 py-3 border">
+                        <div class="flex items-center text-sm">
+                            <div>
+                                <p class="font-semibold text-black">
+                                    {{$i++}}
+                                </p>
+                            </div>
+                        </div>
+                  </td>
                   <td class="px-4 py-3 border">
                     <div class="flex items-center text-sm">
                       <div>
@@ -45,10 +64,10 @@
                     @if ($task->status == 1)
 
                     @else ($task->status == 0)
-                    <button class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none"
+                    <a href="{{route('complete', $task->id)}}" class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none"
                     >
                     completed
-                    </button>
+                    </a>
                     @endif
 
                 </td>
@@ -70,6 +89,7 @@
                   <td class="px-4 py-3 text-sm border"> -- </td>
                 </tr>
                 @endforelse
+
 
 
 
@@ -227,6 +247,7 @@
                 </tr> -->
               </tbody>
             </table>
+            {{$TaskList->links()}}
           </div>
         </div>
     </section>

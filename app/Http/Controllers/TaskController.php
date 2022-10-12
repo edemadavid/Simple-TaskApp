@@ -21,7 +21,7 @@ class TaskController extends Controller
 
         $project = Project::find($id);
 
-        $TaskList = Task::where('project_id',  $id)->get();
+        $TaskList = Task::where('project_id',  $id)->paginate(10);
 
         return(view('task', compact('TaskList', 'project')));
 
@@ -106,6 +106,25 @@ class TaskController extends Controller
         $task->save();
         return(view('task'));
     }
+
+    public function complete ($id)
+    {
+
+
+        $task = Task::find($id);
+        $task->status = 1;
+
+        // dd($task->project_id);
+
+        $task->save();
+
+        return redirect()->action(
+            [TaskController::class, 'index'],
+            ['id'=> $task->project_id]
+
+        );
+    }
+
 
     /**
      * Remove the specified resource from storage.
